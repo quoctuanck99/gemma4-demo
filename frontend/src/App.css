@@ -1,0 +1,482 @@
+/* ── Base layout ─────────────────────────────────────────────── */
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #f6f7f9;
+}
+
+/* ── Header ──────────────────────────────────────────────────── */
+.header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: #fff;
+  border-bottom: 1px solid #e8eaed;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  z-index: 10;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #4285f4, #34a853);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.header-badge {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #6b7280;
+  background: #f1f3f5;
+  border-radius: 20px;
+  padding: 2px 8px;
+}
+
+.new-chat-btn {
+  font-size: 13px;
+  font-weight: 500;
+  color: #4b5563;
+  background: transparent;
+  border: 1px solid #e0e2e7;
+  border-radius: 8px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.new-chat-btn:hover { background: #f3f4f6; }
+
+/* ── Messages scroll area ────────────────────────────────────── */
+.messages-container {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.messages {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 28px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-height: 100%;
+}
+
+/* ── Empty / welcome state ───────────────────────────────────── */
+.empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-bottom: 60px;
+  gap: 12px;
+}
+
+.empty-logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #4285f4, #34a853);
+  color: #fff;
+  font-size: 26px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.empty-heading {
+  font-size: 22px;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.empty-sub {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.examples {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 8px;
+  max-width: 560px;
+  width: 100%;
+}
+
+.example-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 13.5px;
+  color: #374151;
+  text-align: left;
+  cursor: pointer;
+  line-height: 1.4;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.example-card:hover {
+  border-color: #4285f4;
+  box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.08);
+}
+
+/* ── Message rows ────────────────────────────────────────────── */
+.message {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  animation: fadeSlideIn 0.18s ease;
+}
+
+.message.user {
+  flex-direction: row-reverse;
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Avatar */
+.avatar {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3px;
+}
+
+.assistant-avatar {
+  background: linear-gradient(135deg, #4285f4, #34a853);
+  color: #fff;
+}
+
+/* Bubble — base styles only, width is controlled by the container */
+.bubble {
+  padding: 11px 15px;
+  border-radius: 18px;
+  font-size: 15px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.user-bubble {
+  background: #4285f4;
+  color: #fff;
+  border-bottom-right-radius: 5px;
+  max-width: 72%; /* direct flex child of .message row */
+}
+
+/* Assistant message: body wraps bubble + copy button */
+.assistant-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  max-width: 82%;
+  min-width: 0;
+}
+
+.assistant-bubble {
+  align-self: stretch;       /* fill the body width for proper text wrapping */
+  background: #fff;
+  color: #1f2937;
+  border-bottom-left-radius: 5px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07), 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+/* Typing indicator: bubble should hug the dots, not stretch full-width */
+.assistant-bubble.compact {
+  align-self: flex-start;
+}
+
+/* ── Copy button ─────────────────────────────────────────────── */
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  /* align-self: flex-start is inherited from assistant-body's align-items */
+}
+
+.copy-btn svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+
+.copy-btn:hover {
+  background: #f3f4f6;
+  color: #374151;
+  border-color: #d1d5db;
+}
+
+.copy-btn.copied {
+  color: #16a34a;
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+}
+
+/* Loading dots shown while waiting for the first token */
+.placeholder-dots {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  padding: 2px 0;
+}
+
+.placeholder-dots span {
+  width: 7px;
+  height: 7px;
+  background: #9ca3af;
+  border-radius: 50%;
+  animation: dotBounce 1.2s ease-in-out infinite;
+}
+.placeholder-dots span:nth-child(2) { animation-delay: 0.2s; }
+.placeholder-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dotBounce {
+  0%, 80%, 100% { transform: scale(0.75); opacity: 0.4; }
+  40%           { transform: scale(1.2);  opacity: 1; }
+}
+
+/* ── Streaming cursor ────────────────────────────────────────── */
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 0.85em;
+  background: #4285f4;
+  margin-left: 2px;
+  vertical-align: middle;
+  border-radius: 1px;
+  animation: cursorBlink 0.9s infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* ── Input bar ───────────────────────────────────────────────── */
+.input-bar {
+  flex-shrink: 0;
+  background: #fff;
+  border-top: 1px solid #e8eaed;
+  padding: 14px 16px 10px;
+}
+
+.input-wrapper {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  background: #f9fafb;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 8px 8px 8px 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-wrapper:focus-within {
+  border-color: #4285f4;
+  box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.12);
+  background: #fff;
+}
+
+.input-wrapper textarea {
+  flex: 1;
+  border: none;
+  background: transparent;
+  resize: none;
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.55;
+  max-height: 180px;
+  overflow-y: auto;
+  outline: none;
+  color: #1f2937;
+  padding: 2px 0;
+}
+
+.input-wrapper textarea::placeholder { color: #9ca3af; }
+.input-wrapper textarea:disabled { color: #9ca3af; }
+
+/* Buttons */
+.btn {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn:active { transform: scale(0.96); }
+
+.send-btn {
+  background: #4285f4;
+  color: #fff;
+}
+.send-btn:hover:not(:disabled) { background: #2d6fd4; }
+.send-btn:disabled { background: #c7d9f8; cursor: not-allowed; }
+
+.stop-btn {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+.stop-btn:hover { background: #fee2e2; }
+
+.stop-icon {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  background: #dc2626;
+  border-radius: 2px;
+}
+
+.input-hint {
+  max-width: 720px;
+  margin: 7px auto 0;
+  font-size: 11px;
+  color: #d1d5db;
+  text-align: center;
+}
+
+/* ── Markdown content ────────────────────────────────────────── */
+.assistant-bubble p {
+  margin: 0 0 0.75em;
+}
+.assistant-bubble p:last-child { margin-bottom: 0; }
+
+.assistant-bubble h1,
+.assistant-bubble h2,
+.assistant-bubble h3,
+.assistant-bubble h4 {
+  font-weight: 600;
+  margin: 1em 0 0.4em;
+  line-height: 1.3;
+  color: #111827;
+}
+.assistant-bubble h1 { font-size: 1.25em; }
+.assistant-bubble h2 { font-size: 1.1em; }
+.assistant-bubble h3 { font-size: 1em; }
+.assistant-bubble h1:first-child,
+.assistant-bubble h2:first-child,
+.assistant-bubble h3:first-child { margin-top: 0; }
+
+.assistant-bubble ul,
+.assistant-bubble ol {
+  margin: 0.5em 0 0.75em 1.4em;
+  padding: 0;
+}
+.assistant-bubble li { margin-bottom: 0.25em; }
+.assistant-bubble li:last-child { margin-bottom: 0; }
+
+.assistant-bubble blockquote {
+  margin: 0.75em 0;
+  padding: 0.4em 0 0.4em 1em;
+  border-left: 3px solid #d1d5db;
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* Inline code */
+.inline-code {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 0.88em;
+  background: #f1f3f5;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 1px 5px;
+  color: #d63369;
+}
+
+/* Code block (SyntaxHighlighter wraps in its own div) */
+.assistant-bubble > div > div,
+.assistant-bubble div[class*="language-"] {
+  margin: 0.6em 0;
+  border-radius: 10px;
+  font-size: 13.5px;
+  overflow: hidden;
+}
+.assistant-bubble div:last-child > div { margin-bottom: 0; }
+
+/* Tables */
+.assistant-bubble table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.75em 0;
+  font-size: 14px;
+}
+.assistant-bubble th,
+.assistant-bubble td {
+  border: 1px solid #e5e7eb;
+  padding: 6px 12px;
+  text-align: left;
+}
+.assistant-bubble th {
+  background: #f9fafb;
+  font-weight: 600;
+}
+.assistant-bubble tr:nth-child(even) td { background: #fafafa; }
+
+/* Horizontal rule */
+.assistant-bubble hr {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin: 1em 0;
+}
+
+/* Links */
+.assistant-bubble a {
+  color: #4285f4;
+  text-decoration: none;
+}
+.assistant-bubble a:hover { text-decoration: underline; }
